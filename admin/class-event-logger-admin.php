@@ -152,7 +152,8 @@ class Event_Logger_Admin {
 		
 		$settings = get_option( 'event_logger_options' );
 
-		if ( 1 == $settings[ 'login' ] ) {
+		if ( ( isset( $settings[ 'login '] ) && 1 == $settings[ 'login' ] )
+			|| $this->event_logger_should_log( 'login' ) ) {
 			//TODO: Kolla om login finns i array
 			$current_user = wp_get_current_user();
 			$user = get_user_by( "login", $user );
@@ -264,5 +265,49 @@ class Event_Logger_Admin {
 		
 		file_put_contents( $log_file, $event_text, FILE_APPEND );
 	}
+
+	// Handle sessions to override logging settings on settings page.
+	// Intended for temporary logging of specific events.
+
+	// TODO: hanterera custom värden också?
+	function event_logger_should_log( $event_to_log ) {
+		
+		if ( isset( $_SESSION[ 'event_logger_' . $event_to_log] ) &&  $_SESSION[ 'event_logger_' . $event_to_log ] ) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	function event_logger_get_action_events() {
+
+		//TODO: Array av godkända val att logga? 
+		if ( isset( $_GET[ 'event-logger-action' ] ) ) {
+			$action = sanitize_text_field( $_GET[ 'event-logger-action' ] );
+			$_SESSION[ 'event_logger_' . $action ] = true;
+		}
+
+	}
+
+	function event_logger_register_session() {
+		
+		if( ! session_id() ) { //&& current_user_can( 'manage_options' ) ) {
+			//&& current_user_can( 'client_tools' )  )
+			session_start();
+			//session_unset();
+		}
+
+	}
+
+	function event_logger_destroy_session() {
+		
+		if ( isset( $_GET[ 'event-logger-action' ] ) && 'quit_logging' == $_GET[ 'event-logger-action' ] ) {
+			session_destroy();
+		}
+
+	}
+
+	//End session handling
 
 }

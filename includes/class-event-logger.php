@@ -179,6 +179,11 @@ class Event_Logger {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+
+		// Use Sessions to temporary add and remove logging functions
+		$this->loader->add_action( 'init', $plugin_admin, 'event_logger_register_session' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'event_logger_destroy_session' );
+
 		// posts						 
 		$this->loader->add_action("save_post", $plugin_admin, "event_logger_save_post");
 		
@@ -188,6 +193,9 @@ class Event_Logger {
 		
 		// user failed login attempt to username that exists
 		//$this->loader->add_action( "wp_authenticate_user", $plugin_admin, "event_logger_wp_authenticate_user" );
+
+		//Get events from url to log
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'event_logger_get_action_events' );
 
 	}
 
