@@ -189,7 +189,7 @@ class Event_Logger {
 		
 		//User login and out
 		$this->loader->add_action( "wp_login", $plugin_admin, "event_logger_wp_login" );
-		//$this->loader->add_action( "wp_logout", $plugin_admin,"event_logger_wp_logout" );
+		$this->loader->add_action( "wp_logout", $plugin_admin,"event_logger_wp_logout" );
 		
 		// user failed login attempt to username that exists
 		//$this->loader->add_action( "wp_authenticate_user", $plugin_admin, "event_logger_wp_authenticate_user" );

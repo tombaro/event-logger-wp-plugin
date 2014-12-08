@@ -24,6 +24,15 @@ class Event_Logger_Option {
 	protected static $instance = null;
 
 	/**
+	 * The ID of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $event_logger    The ID of this plugin.
+	 */
+	private $event_logger;
+
+	/**
 	 * Initialize the plugin by registrating settings
 	 *
 	 * @since     1.0.0
@@ -33,6 +42,7 @@ class Event_Logger_Option {
 		// Get $plugin_slug from public plugin class.
 		$plugin = Event_Logger::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
+		$this->event_logger = $plugin->get_event_logger();
 
 		// Register Settings
 		$this->register_settings();
@@ -86,7 +96,7 @@ class Event_Logger_Option {
 			// ID used to identify the field throughout the theme
 			'event_logger_logfile_option',
 			// The label to the left of the option interface element
-			'Path to log file',
+			__( 'Path to log file', $this->event_logger ),
 			// The name of the function responsible for rendering the option interface
 			array( $this, 'event_logger_render_output_textbox' ),
 			// The page on which this option will be displayed
@@ -109,7 +119,7 @@ class Event_Logger_Option {
 		//LOGIN
 		add_settings_field(
 			'event_logger_login_option',
-			'Log in',
+			__( 'Log in', $this->event_logger ),
 			array( $this, 'event_logger_render_output_checkbox' ),
 			$this->plugin_slug,
 			'event_logger_default_section',
@@ -118,10 +128,16 @@ class Event_Logger_Option {
 				'option_key' => 'login' )
 			);
 
-		register_setting(
+		//LOGOUT
+		add_settings_field(
+			'event_logger_logout_option',
+			__( 'Log out', $this->event_logger ),
+			array( $this, 'event_logger_render_output_checkbox' ),
+			$this->plugin_slug,
 			'event_logger_default_section',
-			'event_logger_options',
-			array( $this, 'event_logger_validate_input' )
+			array(
+				'option_array_name' => 'event_logger_options',
+				'option_key' => 'logout' )
 			);
 
 		//CUSTOM SECTION
@@ -133,7 +149,7 @@ class Event_Logger_Option {
 
 		add_settings_section(
 			'event_logger_custom_section',
-			'Event Logger custom section',  
+			__( 'Event Logger custom section', $this->event_logger ),  
 			array( $this, 'event_logger_display_custom_section' ),
 			$this->plugin_slug
 			);
@@ -230,9 +246,8 @@ class Event_Logger_Option {
 		
 		$defaults = array(
 			'login'	=>	'',
-			'logfilepath' => ABSPATH . 'event_logger_wp.log'
-			//'show_content'		=>	'',
-			//'show_footer'		=>	'',
+			'logfilepath' => ABSPATH . 'event_logger_wp.log',
+			'logout' => ''
 		);
 		
 		return apply_filters( 'event_logger_default_input_options', $defaults );
@@ -245,7 +260,7 @@ class Event_Logger_Option {
 	function event_logger_custom_input_options() {
 		
 		$defaults = array(
-			'logout'	=>	''
+			'custom'	=>	''
 			//'show_content'		=>	'',
 			//'show_footer'		=>	'',
 		);

@@ -153,8 +153,7 @@ class Event_Logger_Admin {
 		$settings = get_option( 'event_logger_options' );
 
 		if ( ( isset( $settings[ 'login '] ) && 1 == $settings[ 'login' ] )
-			|| $this->event_logger_should_log( 'login' ) ) {
-			//TODO: Kolla om login finns i array
+				|| $this->event_logger_should_log( 'login' ) ) {
 			$current_user = wp_get_current_user();
 			$user = get_user_by( "login", $user );
 			$user_nicename = urlencode( $user->user_nicename );
@@ -172,6 +171,30 @@ class Event_Logger_Admin {
 				'object_name'=> $user_nicename,
 				'user_id' => $user_id
 			];
+
+			$this->event_logger_write_to_log( $log );
+		}
+
+	}
+
+	// user logs out 
+	function event_logger_wp_logout() { 
+		
+		$settings = get_option( 'event_logger_options' );
+
+		if ( ( isset( $settings[ 'logout '] ) && 1 == $settings[ 'logout' ] )
+				|| $this->event_logger_should_log( 'logout' ) ) {
+
+			$current_user = wp_get_current_user();
+			$current_user_id = $current_user->ID;
+			$user_nicename = urlencode($current_user->user_nicename);
+
+			$log = [
+				'event' => 'Logged out',
+				'object_type' => 'user',
+				'object_id' => $current_user_id,
+				'object_name'=> $user_nicename
+				];
 
 			$this->event_logger_write_to_log( $log );
 		}
@@ -272,7 +295,11 @@ class Event_Logger_Admin {
 	// TODO: hanterera custom värden också?
 	function event_logger_should_log( $event_to_log ) {
 		
-		if ( isset( $_SESSION[ 'event_logger_' . $event_to_log] ) &&  $_SESSION[ 'event_logger_' . $event_to_log ] ) {
+		$settings = get_option( 'event_logger_options' );
+
+		if ( ( isset( $settings[ $event_to_log ] ) && 1 == $settings[ $event_to_log ] )
+				|| ( isset( $_SESSION[ 'event_logger_' . $event_to_log ] ) 
+				&&  $_SESSION[ 'event_logger_' . $event_to_log ] ) ) {
 			return true;
 		}
 
