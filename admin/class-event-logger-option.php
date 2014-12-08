@@ -140,6 +140,20 @@ class Event_Logger_Option {
 				'option_key' => 'logout' )
 			);
 
+		//FAILED AUTHENTICATION
+		add_settings_field(
+			'event_logger_failed_authentication_option',
+			__( 'Failed authentication', $this->event_logger ),
+			array( $this, 'event_logger_render_output_checkbox' ),
+			$this->plugin_slug,
+			'event_logger_default_section',
+			array(
+				'option_array_name' => 'event_logger_options',
+				'option_key' => 'failed_authentication' )
+			);
+
+
+
 		//CUSTOM SECTION
 
 		//Check if options exists in database
@@ -154,21 +168,6 @@ class Event_Logger_Option {
 			$this->plugin_slug
 			);
 
-		//LOGOUT
-/*		add_settings_field(
-			'event_logger_logout_option',
-			'Log out',
-			array( $this, 'event_logger_render_output_checkbox_custom' ),
-			$this->plugin_slug,
-			'event_logger_custom_section'
-			);
-
-		register_setting(
-			'event_logger_default_section',
-			'event_logger_custom_options',
-			array( $this, 'event_logger_validate_input' )
-			);
-*/
 			//Hämta "externa" options med prefix "..." och sätt in de i en egen section
 			//Men har vi all info vi behöver? Validering beroende på typ, spara
 	}
@@ -247,7 +246,8 @@ class Event_Logger_Option {
 		$defaults = array(
 			'login'	=>	'',
 			'logfilepath' => ABSPATH . 'event_logger_wp.log',
-			'logout' => ''
+			'logout' => '',
+			'failed_authentication' => ''
 		);
 		
 		return apply_filters( 'event_logger_default_input_options', $defaults );

@@ -192,7 +192,8 @@ class Event_Logger {
 		$this->loader->add_action( "wp_logout", $plugin_admin,"event_logger_wp_logout" );
 		
 		// user failed login attempt to username that exists
-		//$this->loader->add_action( "wp_authenticate_user", $plugin_admin, "event_logger_wp_authenticate_user" );
+		#$user = apply_filters('wp_authenticate_user', $user, $password);
+		$this->loader->add_filter( "wp_authenticate_user", $plugin_admin, "event_logger_wp_authenticate_user", 10, 2 );
 
 		//Get events from url to log
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'event_logger_get_action_events' );

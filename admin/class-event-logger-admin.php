@@ -164,13 +164,13 @@ class Event_Logger_Admin {
 				$user_id = $current_user->ID;
 			}
 
-			$log = [
+			$log = array(
 				'event' => 'Logged in',
 				'object_type' => 'user',
 				'object_id' => $user->ID,
 				'object_name'=> $user_nicename,
 				'user_id' => $user_id
-			];
+			);
 
 			$this->event_logger_write_to_log( $log );
 		}
@@ -189,12 +189,12 @@ class Event_Logger_Admin {
 			$current_user_id = $current_user->ID;
 			$user_nicename = urlencode($current_user->user_nicename);
 
-			$log = [
+			$log = array(
 				'event' => 'Logged out',
 				'object_type' => 'user',
 				'object_id' => $current_user_id,
 				'object_name'=> $user_nicename
-				];
+				);
 
 			$this->event_logger_write_to_log( $log );
 		}
@@ -205,31 +205,37 @@ class Event_Logger_Admin {
 	 * Log failed login attempt to username that exists
 	 */
 	function event_logger_wp_authenticate_user( $user, $password ) {
-/*
-		if ( ! wp_check_password($password, $user->user_pass, $user->ID) ) {
-			
-			// call __() to make translation exist
-			__("failed to log in because they entered the wrong password", "simple-history");
 
-			$description = "";
-			$description .= "HTTP_USER_AGENT: " . $_SERVER["HTTP_USER_AGENT"];
-			$description .= "\nHTTP_REFERER: " . $_SERVER["HTTP_REFERER"];
-			$description .= "\nREMOTE_ADDR: " . $_SERVER["REMOTE_ADDR"];
+		$settings = get_option( 'event_logger_options' );
 
-			$args = array(
-						"object_type" => "user",
-						"object_name" => $user->user_login,
-						"action" => "failed to log in because they entered the wrong password",
-						"object_id" => $user->ID,
-						"description" => $description
+		if ( ( isset( $settings[ 'failed_authentication '] ) && 1 == $settings[ 'failed_authentication' ] )
+				|| $this->event_logger_should_log( 'failed_authentication' ) ) {
+
+			if ( ! wp_check_password( $password, $user->user_pass, $user->ID ) ) {
+				
+				// call __() to make translation exist
+				__("failed to log in because they entered the wrong password", $this->event_logger );
+
+				$description = "";
+				$description .= "HTTP_USER_AGENT: " . $_SERVER["HTTP_USER_AGENT"];
+				$description .= "\nHTTP_REFERER: " . $_SERVER["HTTP_REFERER"];
+				$description .= "\nREMOTE_ADDR: " . $_SERVER["REMOTE_ADDR"];
+
+				$log = array(
+					'event' => 'authentication failed',
+					'object_type' => 'user',
+					'object_id' => $user->ID,
+					'object_name'=> $user->user_login
 					);
-			
-			simple_history_add($args);
+				
+				$this->event_logger_write_to_log( $log );
+
+			}
 
 		}
 
 		return $user;
-*/
+
 	}
 
 	//Depends on define('SAVEQUERIES', true); in wp-config.php
