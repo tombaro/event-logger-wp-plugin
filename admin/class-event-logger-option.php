@@ -168,6 +168,12 @@ class Event_Logger_Option {
 			$this->plugin_slug
 			);
 
+		register_setting(
+			'event_logger_default_section',
+			'event_logger_custom_options',
+			array( $this, 'event_logger_validate_input' )
+			);
+
 			//Hämta "externa" options med prefix "..." och sätt in de i en egen section
 			//Men har vi all info vi behöver? Validering beroende på typ, spara
 	}

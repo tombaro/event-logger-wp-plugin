@@ -183,9 +183,6 @@ class Event_Logger {
 		// Use Sessions to temporary add and remove logging functions
 		$this->loader->add_action( 'init', $plugin_admin, 'event_logger_register_session' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'event_logger_destroy_session' );
-
-		// posts						 
-		$this->loader->add_action("save_post", $plugin_admin, "event_logger_save_post");
 		
 		//User login and out
 		$this->loader->add_action( "wp_login", $plugin_admin, "event_logger_wp_login" );

@@ -266,42 +266,49 @@ class Event_Logger_Admin {
 			"object_id" => '',
 			"object_name" => '',
 			"user_id" => 0,
-			"description" => ''
+			"description" => '',
+			"option_type" => 'event_logger_options'
 		);
 
 		$args = wp_parse_args( $args, $defaults );
-		
-		//Add (utc) time
-		$event_time = current_time( "mysql" );
 
-		$event = ' Event: '. $args[ "event" ];
-		$object_type = ' object_type: '. $args[ "object_type" ];
-		$object_subtype = ' object_subtype: '. $args[ "object_subtype" ];
-		$object_id = ' object_id: '. $args[ "object_id" ];
-		$object_name = ' object_name: '. $args[ "object_name" ];
-		$user_id = ' user_id: '. $args[ "user_id" ];
-		$description = ' description: '. $args[ "description" ];
-		
-		$event_text = $event_time . $event . $object_type . $object_id . $object_name . $user_id . $description . "\n"; 
-		
-		//Append to file
-		//Set Default value
-		$log_file = ABSPATH . 'event_logger_wp.log';
-		$settings = get_option( 'event_logger_options' );
-		if ( isset( $settings[ 'logfilepath' ] ) && '' != $settings[ 'logfilepath' ] ) {
-			$log_file = sanitize_text_field( $settings[ 'logfilepath' ] );
+		if ( self::event_logger_should_log( $args[ 'event' ], $args[ 'option_type' ] ) ) {
+			//Add (utc) time
+			$event_time = current_time( "mysql" );
+
+			$event = ' Event: '. $args[ "event" ];
+			$object_type = ' object_type: '. $args[ "object_type" ];
+			$object_subtype = ' object_subtype: '. $args[ "object_subtype" ];
+			$object_id = ' object_id: '. $args[ "object_id" ];
+			$object_name = ' object_name: '. $args[ "object_name" ];
+			$user_id = ' user_id: '. $args[ "user_id" ];
+			$description = ' description: '. $args[ "description" ];
+			
+			$event_text = $event_time . $event . $object_type . $object_id . $object_name . $user_id . $description . "\n"; 
+			
+			//Append to file
+			//Default value for file path
+			$log_file = ABSPATH . 'event_logger_wp.log';
+			$settings = get_option( 'event_logger_options' );
+			if ( isset( $settings[ 'logfilepath' ] ) && '' != $settings[ 'logfilepath' ] ) {
+				$log_file = sanitize_text_field( $settings[ 'logfilepath' ] );
+			}
+			file_put_contents( $log_file, $event_text, FILE_APPEND );	
 		}
 		
-		file_put_contents( $log_file, $event_text, FILE_APPEND );
 	}
 
 	// Handle sessions to override logging settings on settings page.
 	// Intended for temporary logging of specific events.
 
-	// TODO: hanterera custom värden också?
-	function event_logger_should_log( $event_to_log ) {
+	private static function event_logger_should_log( $event_to_log, $option_type ) {
 		
-		$settings = get_option( 'event_logger_options' );
+		//If custom settings are to be used
+		if ( 'event_logger_custom_options' == $option_type ) {
+			$settings = get_option( 'event_logger_custom_options' );
+		} else {
+			$settings = get_option( 'event_logger_options' );	
+		}
 
 		if ( ( isset( $settings[ $event_to_log ] ) && 1 == $settings[ $event_to_log ] )
 				|| ( isset( $_SESSION[ 'event_logger_' . $event_to_log ] ) 
