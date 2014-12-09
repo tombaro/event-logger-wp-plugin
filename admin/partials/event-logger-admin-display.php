@@ -14,6 +14,3 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<div class="wrap">
-	<span>hej</span>
-</div>
