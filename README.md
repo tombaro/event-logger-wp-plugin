@@ -1,27 +1,26 @@
-=== Plugin Name ===
-Contributors: toronja
-Tags: log, logging, events
-Requires at least: 3.0.1
-Tested up to: 4.0.1
-License: GPLv2 or later
+<h1>Event Logger</h1>
+
+Contributors: toronja<br />
+Tags: log, logging, events<br />
+Requires at least: 3.0.1<br />
+Tested up to: 4.0.1<br />
+License: GPLv2 or later<br />
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin aims at provide some simple and customizable wordpress log options, primary direct to file. 
 
-== Description ==
+<h2>Description</h2>
 
 
-== Installation ==
+<h2>Installation</h2>
 
 This section describes how to install the plugin and get it working.
-
-e.g.
 
 1. Upload `event-logger.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 
-*To add a custom logging feature.*
+<strong>To add a custom logging feature.</strong><br />
 Below is an example code to add logging for saving a post in Wordpress. Please note the comments in the code for some specific parameter names that has to be set properly.
 
 `
@@ -79,17 +78,17 @@ Below is an example code to add logging for saving a post in Wordpress. Please n
 
 
 
-== Frequently Asked Questions ==
+<h2>Frequently Asked Questions</h2>
 
-= A question that someone might have =
+*A question that someone might have*
 
 An answer to that question.
 
 
-== Changelog ==
+<h2>Changelog</h2>
 
-= 0.3.0 =
+<h3>0.3.0</h3>
 Enable custom logging options to be added from code.
 
-= 0.1.0 =
+<h3>0.1.0</h3>
 Initial commits, provides logging for login to predefiend log file
