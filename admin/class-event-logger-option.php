@@ -17,7 +17,7 @@ class Event_Logger_Option {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 *
 	 * @var      object
 	 */
@@ -26,7 +26,7 @@ class Event_Logger_Option {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   private
 	 * @var      string    $event_logger    The ID of this plugin.
 	 */
@@ -35,7 +35,7 @@ class Event_Logger_Option {
 	/**
 	 * Initialize the plugin by registrating settings
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 */
 	private function __construct() {
 
@@ -51,7 +51,7 @@ class Event_Logger_Option {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 *
 	 * @return    object    A single instance of this class.
 	 */
@@ -68,7 +68,7 @@ class Event_Logger_Option {
 	/**
 	 * Register fields
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 */
 	public function register_settings() {
 
@@ -182,7 +182,7 @@ class Event_Logger_Option {
 	 * This function generate the HTML input element for
 	 * an event logger checkbox option and shows its value.
 	 *
-	 * @since 1.0.0
+	 * @since 0.3.0
 	 */
 	public function event_logger_render_output_checkbox( $args ) {
 		$settings = get_option( $args[ 'option_array_name' ] );
@@ -207,7 +207,7 @@ class Event_Logger_Option {
 	 * This function provides a simple description for the Event Logger Options page.
 	 * This function is being passed as a parameter in the add_settings_section function.
 	 *
-	 * @since 1.0.0
+	 * @since 0.3.0
 	 */
 	public function event_logger_display_default_section() {
 		//TODO: Flytta till event-logger-display yadayada
@@ -228,7 +228,7 @@ class Event_Logger_Option {
 	*
 	* @return         The validated value(s).
 	*
-	* @since 1.0.0
+	* @since 0.3.0
 	*/
 	public function event_logger_validate_input( $input ) {
 		$output = array();

@@ -7,7 +7,7 @@
  * public-facing side of the site and the dashboard.
  *
  * @link       http://example.com
- * @since      1.0.0
+ * @since      0.3.0
  *
  * @package    Event_Logger
  * @subpackage Event_Logger/includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.3.0
  * @package    Event_Logger
  * @subpackage Event_Logger/includes
  * @author     Tom Bergman <tom@klandestino.se>
@@ -33,7 +33,7 @@ class Event_Logger {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   protected
 	 * @var      Event_Logger_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +42,7 @@ class Event_Logger {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   protected
 	 * @var      string    $event_logger    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +51,7 @@ class Event_Logger {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -67,7 +67,7 @@ class Event_Logger {
 	 * of text. Its value should match the Text Domain file header in the main
 	 * plugin file.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 *
 	 * @var      string
 	 */
@@ -76,7 +76,7 @@ class Event_Logger {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 *
 	 * @var      object
 	 */
@@ -89,12 +89,12 @@ class Event_Logger {
 	 * Load the dependencies, define the locale, and set the hooks for the Dashboard and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 */
 	public function __construct() {
 
 		$this->event_logger = 'event-logger';
-		$this->version = '1.0.0';
+		$this->version = '0.3.0';
 
 		$this->load_dependencies();
 		//$this->set_locale();
@@ -116,7 +116,7 @@ class Event_Logger {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -153,7 +153,7 @@ class Event_Logger {
 	 * Uses the Event_Logger_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -169,7 +169,7 @@ class Event_Logger {
 	 * Register all of the hooks related to the dashboard functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -201,7 +201,7 @@ class Event_Logger {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -216,7 +216,7 @@ class Event_Logger {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 */
 	public function run() {
 		$this->loader->run();
@@ -226,7 +226,7 @@ class Event_Logger {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_event_logger() {
@@ -236,7 +236,7 @@ class Event_Logger {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 * @return    Event_Logger_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -246,7 +246,7 @@ class Event_Logger {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
@@ -256,7 +256,7 @@ class Event_Logger {
 	/**
 	 * Return the plugin slug.
 	 *
-	 * @since    1.0.0
+	 * @since    0.3.0
 	 *
 	 * @return    Plugin slug variable.
 	 */
@@ -267,7 +267,7 @@ class Event_Logger {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0.0
+	 * @since     0.3.0
 	 *
 	 * @return    object    A single instance of this class.
 	 */
