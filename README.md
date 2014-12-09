@@ -87,7 +87,7 @@ An answer to that question.
 
 <h2>Changelog</h2>
 
-<h3>0.3.0</h3>
+<h3>0.3.1</h3>
 Enable custom logging options to be added from code.
 
 <h3>0.1.0</h3>

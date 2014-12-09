@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       http://example.com
- * @since      0.3.0
+ * @since      0.3.1
  *
  * @package    Event_Logger
  */
@@ -30,7 +30,20 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-//TODO: Sätt upp enligt reglerna ovan
+if ( ! is_user_logged_in() ) {
+	wp_die( 'You must be logged in to run this script.' );
+}
 
-//if ( get_option( 'event_logger_login_option' ) != false )
-//	delete_option('event_logger_login_option');
+if ( ! current_user_can( 'install_plugins' ) ) {
+	wp_die( 'You do not have permission to run this script.' );
+}
+
+// Default options to delete
+if ( false != get_option( 'event_logger_options' ) ) {
+	delete_option( 'event_logger_options' );
+}
+
+// Custom options to delete
+if ( false != get_option( 'event_logger_custom_options' ) ) {
+	delete_option( 'event_logger_custom_options' );
+}
