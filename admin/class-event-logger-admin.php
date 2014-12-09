@@ -148,56 +148,45 @@ class Event_Logger_Admin {
 	}
 
 	// user logs in
-	function event_logger_wp_login( $user ) {
-		
-		$settings = get_option( 'event_logger_options' );
+	function event_logger_wp_login( $user ) {		
 
-		if ( ( isset( $settings[ 'login '] ) && 1 == $settings[ 'login' ] )
-				|| $this->event_logger_should_log( 'login' ) ) {
-			$current_user = wp_get_current_user();
-			$user = get_user_by( "login", $user );
-			$user_nicename = urlencode( $user->user_nicename );
+		$current_user = wp_get_current_user();
+		$user = get_user_by( "login", $user );
+		$user_nicename = urlencode( $user->user_nicename );
 
-			if ( $current_user->ID == 0 ) {
-				$user_id = $user->ID;
-			} else {
-				$user_id = $current_user->ID;
-			}
-
-			$log = array(
-				'event' => 'Logged in',
-				'object_type' => 'user',
-				'object_id' => $user->ID,
-				'object_name'=> $user_nicename,
-				'user_id' => $user_id
-			);
-
-			$this->event_logger_write_to_log( $log );
+		if ( $current_user->ID == 0 ) {
+			$user_id = $user->ID;
+		} else {
+			$user_id = $current_user->ID;
 		}
+
+		$log = array(
+			'event' => 'login',
+			'object_type' => 'user',
+			'object_id' => $user->ID,
+			'object_name'=> $user_nicename,
+			'user_id' => $user_id
+		);
+
+		$this->event_logger_write_to_log( $log );
 
 	}
 
 	// user logs out 
 	function event_logger_wp_logout() { 
 		
-		$settings = get_option( 'event_logger_options' );
+		$current_user = wp_get_current_user();
+		$current_user_id = $current_user->ID;
+		$user_nicename = urlencode($current_user->user_nicename);
 
-		if ( ( isset( $settings[ 'logout '] ) && 1 == $settings[ 'logout' ] )
-				|| $this->event_logger_should_log( 'logout' ) ) {
+		$log = array(
+			'event' => 'logout',
+			'object_type' => 'user',
+			'object_id' => $current_user_id,
+			'object_name'=> $user_nicename
+			);
 
-			$current_user = wp_get_current_user();
-			$current_user_id = $current_user->ID;
-			$user_nicename = urlencode($current_user->user_nicename);
-
-			$log = array(
-				'event' => 'Logged out',
-				'object_type' => 'user',
-				'object_id' => $current_user_id,
-				'object_name'=> $user_nicename
-				);
-
-			$this->event_logger_write_to_log( $log );
-		}
+		$this->event_logger_write_to_log( $log );
 
 	}
 
@@ -206,31 +195,24 @@ class Event_Logger_Admin {
 	 */
 	function event_logger_wp_authenticate_user( $user, $password ) {
 
-		$settings = get_option( 'event_logger_options' );
+		if ( ! wp_check_password( $password, $user->user_pass, $user->ID ) ) {
+			
+			// call __() to make translation exist
+			__("failed to log in because they entered the wrong password", $this->event_logger );
 
-		if ( ( isset( $settings[ 'failed_authentication '] ) && 1 == $settings[ 'failed_authentication' ] )
-				|| $this->event_logger_should_log( 'failed_authentication' ) ) {
+			$description = "";
+			$description .= "HTTP_USER_AGENT: " . $_SERVER["HTTP_USER_AGENT"];
+			$description .= "\nHTTP_REFERER: " . $_SERVER["HTTP_REFERER"];
+			$description .= "\nREMOTE_ADDR: " . $_SERVER["REMOTE_ADDR"];
 
-			if ( ! wp_check_password( $password, $user->user_pass, $user->ID ) ) {
-				
-				// call __() to make translation exist
-				__("failed to log in because they entered the wrong password", $this->event_logger );
-
-				$description = "";
-				$description .= "HTTP_USER_AGENT: " . $_SERVER["HTTP_USER_AGENT"];
-				$description .= "\nHTTP_REFERER: " . $_SERVER["HTTP_REFERER"];
-				$description .= "\nREMOTE_ADDR: " . $_SERVER["REMOTE_ADDR"];
-
-				$log = array(
-					'event' => 'authentication failed',
-					'object_type' => 'user',
-					'object_id' => $user->ID,
-					'object_name'=> $user->user_login
-					);
-				
-				$this->event_logger_write_to_log( $log );
-
-			}
+			$log = array(
+				'event' => 'failed_authentication',
+				'object_type' => 'user',
+				'object_id' => $user->ID,
+				'object_name'=> $user->user_login
+				);
+			
+			$this->event_logger_write_to_log( $log );
 
 		}
 
@@ -301,7 +283,7 @@ class Event_Logger_Admin {
 	// Handle sessions to override logging settings on settings page.
 	// Intended for temporary logging of specific events.
 
-	private static function event_logger_should_log( $event_to_log, $option_type ) {
+	private static function event_logger_should_log( $event_to_log, $option_type = '' ) {
 		
 		//If custom settings are to be used
 		if ( 'event_logger_custom_options' == $option_type ) {
