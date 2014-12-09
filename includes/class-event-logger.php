@@ -97,9 +97,8 @@ class Event_Logger {
 		$this->version = '0.3.0';
 
 		$this->load_dependencies();
-		//$this->set_locale();
+		$this->set_locale();
 		$this->define_admin_hooks();
-		//$this->define_public_hooks();
 
 	}
 
@@ -111,7 +110,6 @@ class Event_Logger {
 	 * - Event_Logger_Loader. Orchestrates the hooks of the plugin.
 	 * - Event_Logger_i18n. Defines internationalization functionality.
 	 * - Event_Logger_Admin. Defines all hooks for the dashboard.
-	 * - Event_Logger_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -197,21 +195,6 @@ class Event_Logger {
 
 	}
 
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    0.3.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-
-		$plugin_public = new Event_Logger_Public( $this->get_event_logger(), $this->get_version() );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-	}
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
