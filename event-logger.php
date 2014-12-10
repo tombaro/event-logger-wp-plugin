@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://example.com
- * @since             0.3.1
+ * @since             0.3.0
  * @package           Event_Logger
  *
  * @wordpress-plugin
  * Plugin Name:       Event logger
  * Plugin URI:        http://klandestino.se
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress dashboard.
- * Version:           0.3.1
+ * Version:           0.3.0
  * Author:            Tom Bergman
  * Author URI:        http://klandestino.se
  * License:           GPL-2.0+
@@ -68,7 +68,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-event-logger.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    0.3.1
+ * @since    0.3.0
  */
 function run_event_logger() {
 

@@ -4,7 +4,7 @@
  * The dashboard-specific functionality of the plugin.
  *
  * @link       http://example.com
- * @since      0.3.1
+ * @since      0.3.0
  *
  * @package    Event_Logger
  * @subpackage Event_Logger/admin
@@ -25,7 +25,7 @@ class Event_Logger_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    0.3.1
+	 * @since    0.3.0
 	 * @access   private
 	 * @var      string    $event_logger    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Event_Logger_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    0.3.1
+	 * @since    0.3.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Event_Logger_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    0.3.1
+	 * @since    0.3.0
 	 * @var      string    $event_logger       The name of this plugin.
 	 * @var      string    $version    The version of this plugin.
 	 */
@@ -66,7 +66,7 @@ class Event_Logger_Admin {
 	/**
 	 * Register the stylesheets for the Dashboard.
 	 *
-	 * @since    0.3.1
+	 * @since    0.3.0
 	 */
 	public function enqueue_styles() {
 
@@ -89,7 +89,7 @@ class Event_Logger_Admin {
 	/**
 	 * Register the JavaScript for the dashboard.
 	 *
-	 * @since    0.3.1
+	 * @since    0.3.0
 	 */
 	public function enqueue_scripts() {
 
@@ -112,7 +112,7 @@ class Event_Logger_Admin {
 	/**
 	* Register the administration menu for this plugin into the WordPress Dashboard menu.
 	*
-	* @since    0.3.1
+	* @since    0.3.0
 	*/
 	public function add_plugin_admin_menu() {
 	/*
@@ -236,7 +236,7 @@ class Event_Logger_Admin {
 	/**
 	* Writes to log 
 	*
-	* @since    0.3.1
+	* @since    0.3.0
 	* @var      array    $args       Arguments to write to log.
 	*/
 	public static function event_logger_write_to_log( $args ) {
