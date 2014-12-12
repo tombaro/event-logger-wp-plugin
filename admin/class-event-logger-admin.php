@@ -61,6 +61,7 @@ class Event_Logger_Admin {
 
 		// Add the option settings
 		add_action( 'admin_init', array( 'Event_Logger_Option', 'get_instance' ) );
+
 	}
 
 	/**
@@ -275,9 +276,30 @@ class Event_Logger_Admin {
 			if ( isset( $settings[ 'logfilepath' ] ) && '' != $settings[ 'logfilepath' ] ) {
 				$log_file = sanitize_text_field( $settings[ 'logfilepath' ] );
 			}
-			file_put_contents( $log_file, $event_text, FILE_APPEND );	
+			file_put_contents( $log_file, $event_text, FILE_APPEND );
+
+			if ( headers_sent() ) {
+				self::event_logger_log_to_console( $args );
+			}
+
 		}
-		
+
+	}
+
+	/**
+	* Writes to browser console log 
+	*
+	* @since    0.3.2
+	* @var      array    $data       Arguments to write to log.
+	*/
+	public static function event_logger_log_to_console( $data ) {
+
+		if ( is_array( $data ) || is_object( $data ) ) {
+			print "<script type='text/javascript'>console.log('PHP: " . json_encode( $data ) . "');</script>";
+		} else {
+			print "<script type='text/javascript'>console.log('PHP: " . $data . "');</script>";
+		}
+
 	}
 
 	// Handle sessions to override logging settings on settings page.

@@ -94,7 +94,7 @@ class Event_Logger {
 	public function __construct() {
 
 		$this->event_logger = 'event-logger';
-		$this->version = '0.3.1';
+		$this->version = '0.3.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
