@@ -126,7 +126,6 @@ class Event_Logger_Admin {
 			$this->event_logger,
 			array( $this, 'settings_page' )
 			);
-			//add_options_page(__('Event Logger Settings', "event-logger"), 'Event logger', "manage_options", "event-logger", array($this, 'settings_page'));
 	}
 
 
@@ -337,7 +336,6 @@ class Event_Logger_Admin {
 	function event_logger_register_session() {
 		
 		if( ! session_id() && current_user_can( 'manage_options' ) ) {
-			//&& current_user_can( 'client_tools' )  )
 			session_start();
 			//session_unset();
 		}
