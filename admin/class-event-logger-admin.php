@@ -336,7 +336,7 @@ class Event_Logger_Admin {
 
 	function event_logger_register_session() {
 		
-		if( ! session_id() ) { //&& current_user_can( 'manage_options' ) ) {
+		if( ! session_id() && current_user_can( 'manage_options' ) ) {
 			//&& current_user_can( 'client_tools' )  )
 			session_start();
 			//session_unset();
