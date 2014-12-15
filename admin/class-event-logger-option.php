@@ -76,9 +76,6 @@ class Event_Logger_Option {
 		if( false == get_option( 'event_logger_options' ) ) {
 			add_option( 'event_logger_options', apply_filters( 'event_logger_default_input_options', $this->event_logger_default_input_options() ) );
 		}
-
-		//TODO: Gör samma sak med custom options. Behöver det fixas nåt så att det går att 
-		// hooka in i defaultsen där?
 	  
 		add_settings_section(
 			// ID used to identify this section and with which to register options
@@ -174,8 +171,6 @@ class Event_Logger_Option {
 			array( $this, 'event_logger_validate_input' )
 			);
 
-			//Hämta "externa" options med prefix "..." och sätt in de i en egen section
-			//Men har vi all info vi behöver? Validering beroende på typ, spara
 	}
 
 	/**
@@ -190,7 +185,6 @@ class Event_Logger_Option {
 		$option_value = ( isset( $settings[ $option_key ] ) ? $settings[ $option_key ] : 0 );
 
 		$html = "<input type='checkbox' id='" . $option_key . "' name='" . $args[ 'option_array_name' ] . "[" . $option_key . "]' value='1' " . checked( '1', $option_value, false ) . " />";
-		//TODO this? $html .= "<label for='login'> "  . $settings[0] . "</label>";
 
 		echo $html;
 
@@ -210,14 +204,10 @@ class Event_Logger_Option {
 	 * @since 0.3.0
 	 */
 	public function event_logger_display_default_section() {
-		//TODO: Flytta till event-logger-display yadayada
-		//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/event-logger-admin-display.php';
 		echo "<p>This is the default section with common log options</p>";
 	}
 
 	public function event_logger_display_custom_section() {
-		//TODO: Flytta till event-logger-display yadayada
-		//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/event-logger-admin-display.php';
 		echo "<p>This is the Custom section</p>";
 	}
 
