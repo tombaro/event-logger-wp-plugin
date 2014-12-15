@@ -346,7 +346,9 @@ class Event_Logger_Admin {
 
 	function event_logger_destroy_session() {
 		
-		if ( isset( $_GET[ 'event-logger-action' ] ) && 'quit_logging' == $_GET[ 'event-logger-action' ] ) {
+		if ( isset( $_GET[ 'event-logger-action' ] ) 
+			&& 'quit_logging' == $_GET[ 'event-logger-action' ] 
+			&& current_user_can( 'manage_options' ) ) {
 			session_destroy();
 		}
 
