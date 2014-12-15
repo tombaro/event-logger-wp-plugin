@@ -19,8 +19,9 @@ This section describes how to install the plugin and get it working.
 1. Upload `event-logger.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
+<h2>How to use it</h2>
 
-<strong>To add a custom logging feature.</strong><br />
+<h3>To add a custom logging feature.</h3>
 Below is an example code to add logging for saving a post in Wordpress. Please note the comments in the code for some specific parameter names that has to be set properly.
 
 `
@@ -76,7 +77,12 @@ Below is an example code to add logging for saving a post in Wordpress. Please n
 	}
 `
 
+<h3>To add logging "on the fly"</h3>
+It is possible to override the options that are set on the settings page. This could for example be used if you want to temporary log some specific actions. To add the override logging options, add a get parameter to the url, like:
+mysite.org/?event-logger-action=login
+and to quit all temporary logging: mysite.org/?event-logger-action=quit_logging
 
+To be able to set the temporary logging you need to be logged in to wp-admin and have the right privileges.
 
 <h2>Frequently Asked Questions</h2>
 
