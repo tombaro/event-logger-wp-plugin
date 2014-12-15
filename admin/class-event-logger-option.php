@@ -233,13 +233,15 @@ class Event_Logger_Option {
 	public function event_logger_validate_input( $input ) {
 		$output = array();
 
-		foreach ( $input as $key => $value ) {
-			if( isset( $input[ $key ] ) ) {
-				$output[ $key ] = strip_tags( stripslashes( $input[ $key ] ) );
+		if ( isset( $input ) ) {
+			foreach ( $input as $key => $value ) {
+				if( isset( $input[ $key ] ) ) {
+					$output[ $key ] = strip_tags( stripslashes( $input[ $key ] ) );
+				}
 			}
-		}
 
-		//TODO: Generaliserat felmeddelande
+			//TODO: Generaliserat felmeddelande	
+		}
 
 		return apply_filters( 'event_logger_validate_input', $output, $input );
 	}
