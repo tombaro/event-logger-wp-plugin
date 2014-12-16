@@ -88,6 +88,18 @@ class Event_Logger_Option {
 			$this->plugin_slug
 			);
 
+		//TOGGLE ALL LOGGIN OFF/ON
+		add_settings_field(
+			'event_logger_stop_all_logging_option',
+			__( 'Stop All Logging ', $this->event_logger ),
+			array( $this, 'event_logger_render_output_checkbox' ),
+			$this->plugin_slug,
+			'event_logger_default_section',
+			array(
+				'option_array_name' => 'event_logger_options',
+				'option_key' => 'stop_all_logging' )
+			);
+
 		//LOG FILE PATH
 		add_settings_field(
 			// ID used to identify the field throughout the theme
@@ -112,6 +124,7 @@ class Event_Logger_Option {
 			// The callback function for sanitization and validation
 			array( $this, 'event_logger_validate_input' )
 			);
+
 
 		//LOGIN
 		add_settings_field(
@@ -245,7 +258,8 @@ class Event_Logger_Option {
 			'login'	=>	'',
 			'logfilepath' => ABSPATH . 'event_logger_wp.log',
 			'logout' => '',
-			'failed_authentication' => ''
+			'failed_authentication' => '',
+			'stop_all_logging' => '0'
 		);
 		
 		return apply_filters( 'event_logger_default_input_options', $defaults );

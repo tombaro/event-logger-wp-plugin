@@ -305,12 +305,17 @@ class Event_Logger_Admin {
 	// Intended for temporary logging of specific events.
 
 	private static function event_logger_should_log( $event_to_log, $option_type = '' ) {
-		
+
+		$settings = get_option( 'event_logger_options' );
+
+		// All logging turned off?
+		if ( isset( $settings[ 'stop_all_logging' ] ) && 1 == $settings[ 'stop_all_logging' ] ) {
+			return false;
+		}
+			
 		//If custom settings are to be used
 		if ( 'event_logger_custom_options' == $option_type ) {
 			$settings = get_option( 'event_logger_custom_options' );
-		} else {
-			$settings = get_option( 'event_logger_options' );	
 		}
 
 		if ( ( isset( $settings[ $event_to_log ] ) && 1 == $settings[ $event_to_log ] )
