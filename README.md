@@ -84,6 +84,9 @@ and to quit all temporary logging: mysite.org/?event-logger-action=quit_logging
 
 To be able to set the temporary logging you need to be logged in to wp-admin and have the right privileges.
 
+<h3>To add different logging for specific ip number</h3>
+It is possible to log to different files per ip number. Just add the tag "%ip%" to your "Path to log file" in Event Logger Settings, e.g. /path/to/file-%ip%.log. Note that by doing this, you will no longer log to the old log file. 
+
 <h2>Frequently Asked Questions</h2>
 
 *A question that someone might have*

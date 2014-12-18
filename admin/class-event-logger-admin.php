@@ -273,7 +273,13 @@ class Event_Logger_Admin {
 			$log_file = ABSPATH . 'event_logger_wp.log';
 			$settings = get_option( 'event_logger_options' );
 			if ( isset( $settings[ 'logfilepath' ] ) && '' != $settings[ 'logfilepath' ] ) {
+
 				$log_file = sanitize_text_field( $settings[ 'logfilepath' ] );
+
+				//Should we log to a specific file? (E.g. ip based)
+				if ( false !== strpos( $log_file, '%ip%' ) ) {
+					$log_file = str_replace( '%ip%', self::get_the_user_ip(), $log_file );
+				}
 			}
 			file_put_contents( $log_file, $event_text, FILE_APPEND );
 
@@ -358,5 +364,23 @@ class Event_Logger_Admin {
 	}
 
 	//End session handling
+
+
+	// Display User IP in WordPress
+	static function get_the_user_ip() {
+
+		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+		//check ip from share internet
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			//to check ip is pass from proxy
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+
+		return apply_filters( 'get_the_user_ip', $ip );
+
+	}
 
 }
